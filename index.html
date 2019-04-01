@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <title>Star Wars Bounty Hunter Arena</title>
+</head>
+<body>
+    <div class="title">
+        <h1>Star Wars Bounty Hunter Arena!</h1>
+    </div>
+    <div>
+        <h2 id="characterSelection">Click to choose your bounty hunter:</h2>
+    </div>
+
+    <div class="wrapper">
+        <button class="character" id="boba">
+            <h3>Boba Fett</h3>
+            <img src="assets/images/boba.jpg" alt="Boba">
+            <p id=hp1>""</p>
+        </button>
+        <button class="character" id="bossk">
+            <h3>Bossk</h3>
+            <img src="assets/images/bossk.jpg" alt="Bossk">
+            <p id="hp2">""</p>
+        </button>
+        <button class="character" id="dengar">
+            <h3>Dengar</h3>
+            <img src="assets/images/dengar.jpg" alt="Dengar">
+            <p id="hp3">""</p>
+        </button>
+        <button class="character" id="ig88">
+            <h3>IG-88</h3>
+            <img src="assets/images/ig88.jpg" alt="ig88">
+            <p id="hp4">""</p>
+        </button> 
+    </div>
+    </div>
+    <br>
+    <div class="characterTitle">           
+        <h2>Your Bounty Hunter:</h2>
+    </div>
+    <div id="arena">
+
+    </div>
+    <br>
+    <div class="enemyTitle">
+        <h2>Scum to fight:</h2>
+    </div>
+    <div id="enemyArena">
+    </div>
+    <br>
+    <div class="fightSection">
+        <h2>Fight!</h2>
+        <button id="atkBtn">Attack</button>
+    </div>
+    <br>
+    <div class="defenderTitle">
+        <h2>Opponent</h2>
+    </div>
+    <div id="opponentArena">
+
+    </div>
+
+
+    
+    <script>
+        class Character  {
+            constructor(hp, atk, id) {
+                this.hp = hp;
+                this.atk = atk;
+                this.id = id;
+            }
+        }
+
+        var boba = new Character(150, 25, "boba");
+        var bossk = new Character(180, 10, "bossk");
+        var dengar = new Character(135, 35, "dengar");
+        var ig88 = new Character(145, 20, "ig88");
+
+        var characters = {
+            "boba": boba,
+            "bossk": bossk,
+            "dengar": dengar,
+            "ig88": ig88
+        };
+           
+        var player = null;
+        var opponent = null;
+
+        function movePlayer() {
+            $(player).appendTo( $("#arena"));
+            var group = document.getElementsByClassName("wrapper");
+            $(group).appendTo("#enemyArena");
+            $("#characterSelection").remove();
+        }
+
+        function moveOpponent() {
+            $(opponent).appendTo( $("#opponentArena"))
+        };
+
+        function attack() {
+            var arenaPlayer = characters[player.id];
+            var arenaOpponent = characters[opponent.id];
+
+            arenaOpponent.hp = arenaOpponent.hp - arenaPlayer.atk;
+            arenaPlayer.hp = arenaPlayer.hp - arenaOpponent.atk;
+            
+            characters[player.id] = arenaPlayer;
+            characters[opponent.id] = arenaOpponent;
+        };
+
+
+
+        $("button").on("click", function () {
+            if(player === null) {
+                player = this;
+                movePlayer();
+            } else if (opponent === null) {
+                opponent = this;
+                moveOpponent();
+                console.log(characters);
+            };
+        });
+
+        $("#atkBtn").on("click", function() {
+            attack();
+            console.log(characters);
+            
+        });
+
+
+    </script>
+</body>
+</html>

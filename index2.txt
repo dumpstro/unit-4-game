@@ -1,0 +1,53 @@
+    $(document).ready(function() {
+            $("#boba").one("click", function() {
+                $("#characterSelection").remove();
+                $("#boba").appendTo( $("#arena"));
+                $("#bossk").appendTo( $("#enemyArena"));
+                $("#bossk").css("background-color", "red");
+                $("#bossk").one("click", function() {
+                    $("#bossk").appendTo( $("#opponent"));
+                    $("#bossk").css({
+                        "background-color": "black",
+                        "color": "#ffff00"
+                    });
+                    $("#boba").appendTo( $("#arena"));
+                    $("#boba").css("background-color", "slategray");
+                });
+                $("#dengar").appendTo( $("#enemyArena"));
+                $("#dengar").css("background-color", "red");
+                $("#dengar").one("click", function() {
+                    $("#dengar").appendTo( $("#opponent"));
+                    $("#dengar").css({
+                        "background-color": "black",
+                        "color": "#ffff00"
+                    });
+                    $("#boba").appendTo( $("#arena"));
+                    $("#boba").css("background-color", "slategray");
+                });
+                $("#ig88").appendTo( $("#enemyArena"));
+                $("#ig88").css("background-color", "red");
+                $("#ig88").one("click", function() {
+                    $("#ig88").appendTo( $("#opponent"));
+                    $("#ig88").css({
+                        "background-color": "black",
+                        "color": "#ffff00"
+                    });
+                    $("#boba").appendTo( $("#arena"));
+                    $("#boba").css("background-color", "slategray");
+                });
+            });
+        });
+        $(document).ready(function() {
+            $("#bossk").one("click", function() {
+                $("#characterSelection").remove();
+                $("#bossk").appendTo( $("#arena"));
+                $("#boba").appendTo( $("#enemyArena"));
+                $("#boba").css("background-color", "red");
+                $("#boba").one("click", function() {
+                    $("#boba").appendTo( $("#opponent"));
+                    $("#boba").css({
+                        "background-color": "black",
+                        "color": "#ffff00"
+                    });
+                });
+            });

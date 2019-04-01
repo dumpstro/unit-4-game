@@ -1,0 +1,52 @@
+body {
+    background: url(../images/mosEisley.jpg) no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+img {
+    height: 200px;
+    width: 200px;
+}
+
+.character {
+    background-color: slategray;
+    border: 2px solid goldenrod;
+    height: 275px;
+    width: 250px;
+    float: left;
+}
+
+h1 {
+    color: #ffff00;
+    text-align: right;
+}
+
+h2 {
+    color: #ffff00;
+}
+
+.characterTitle {
+    clear: left;
+}
+
+.enemyTitle {
+    clear: left;
+}
+
+#fightSection {
+    clear: left;
+}
+
+#defenderTitle {
+    clear: left;
+}
+
