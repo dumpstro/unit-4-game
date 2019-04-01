@@ -20,22 +20,22 @@
         <button class="character" id="boba">
             <h3>Boba Fett</h3>
             <img src="assets/images/boba.jpg" alt="Boba">
-            <p id=hp1>""</p>
+            <h4 class="hp" id="hp1">HP: </h4>
         </button>
         <button class="character" id="bossk">
             <h3>Bossk</h3>
             <img src="assets/images/bossk.jpg" alt="Bossk">
-            <p id="hp2">""</p>
+            <h4 class="hp" id="hp2">HP:  </h4>
         </button>
         <button class="character" id="dengar">
             <h3>Dengar</h3>
             <img src="assets/images/dengar.jpg" alt="Dengar">
-            <p id="hp3">""</p>
+            <h4 class="hp" id="hp3">HP: </h4>
         </button>
         <button class="character" id="ig88">
             <h3>IG-88</h3>
             <img src="assets/images/ig88.jpg" alt="ig88">
-            <p id="hp4">""</p>
+            <h4 class="hp" id="hp4">HP: </h4>
         </button> 
     </div>
     </div>
@@ -59,9 +59,13 @@
     </div>
     <br>
     <div class="defenderTitle">
-        <h2>Opponent</h2>
+        <h2>Opponent:</h2>
     </div>
     <div id="opponentArena">
+
+    </div>
+
+    <div id="battleText">
 
     </div>
 
@@ -69,37 +73,53 @@
     
     <script>
         class Character  {
-            constructor(hp, atk, id) {
+            constructor(hp, atk, ctr, bonus, id) {
                 this.hp = hp;
-                this.atk = atk;
+                this.atk = atk
+                this.ctr = ctr;
+                this.bonus = bonus;
                 this.id = id;
-            }
-        }
+            };
+        };
 
-        var boba = new Character(150, 25, "boba");
-        var bossk = new Character(180, 10, "bossk");
-        var dengar = new Character(135, 35, "dengar");
-        var ig88 = new Character(145, 20, "ig88");
+        //var boba = new Character(150, 25, 20, "boba");
+        //var bossk = new Character(180, 10, 20, "bossk");
+        //var dengar = new Character(135, 35, 10,"dengar");
+        //var ig88 = new Character(145, 20, 15, "ig88");
 
         var characters = {
-            "boba": boba,
-            "bossk": bossk,
-            "dengar": dengar,
-            "ig88": ig88
+            "boba": new Character(150, 25, 20, 2, "boba"),
+            "bossk": new Character(180, 10, 20, 3, "bossk"),
+            "dengar": new Character(135, 35, 10, 1, "dengar"),
+            "ig88": new Character(145, 20, 15, 4, "ig88"),
         };
-           
+
         var player = null;
         var opponent = null;
+
+        $(document).ready(function() {
+            $("#hp1").append(characters["boba"].hp);
+            $("#hp2").append(characters["bossk"].hp);
+            $("#hp3").append(characters["dengar"].hp);
+            $("#hp4").append(characters["ig88"].hp);
+        });
+
 
         function movePlayer() {
             $(player).appendTo( $("#arena"));
             var group = document.getElementsByClassName("wrapper");
             $(group).appendTo("#enemyArena");
             $("#characterSelection").remove();
+            $(".character").css("background-color", "red");
+            $(player).css("background-color", "slategray");
         }
 
         function moveOpponent() {
-            $(opponent).appendTo( $("#opponentArena"))
+            $(opponent).appendTo( $("#opponentArena"));
+            $(opponent).css({
+                "background-color": "black",
+                "color": "#ffff00"
+            });
         };
 
         function attack() {
@@ -107,22 +127,30 @@
             var arenaOpponent = characters[opponent.id];
 
             arenaOpponent.hp = arenaOpponent.hp - arenaPlayer.atk;
-            arenaPlayer.hp = arenaPlayer.hp - arenaOpponent.atk;
+            arenaPlayer.hp = arenaPlayer.hp - arenaOpponent.ctr;
             
             characters[player.id] = arenaPlayer;
             characters[opponent.id] = arenaOpponent;
+
+            for (i = 0; i < 50; i++) {
+                $("#atkBtn").on("click", function() {
+                    $("#hp1").replaceWith(characters["boba"].hp);
+                    $("#hp2").replaceWith(characters["bossk"].hp);
+                    $("#hp3").replaceWith(characters["dengar"].hp);
+                    $("#hp4").replaceWith(characters["ig88"].hp);
+                });
+            };
         };
 
 
 
-        $("button").on("click", function () {
+        $("button").on("click", function() {
             if(player === null) {
                 player = this;
                 movePlayer();
             } else if (opponent === null) {
                 opponent = this;
                 moveOpponent();
-                console.log(characters);
             };
         });
 

@@ -42,11 +42,21 @@ h2 {
     clear: left;
 }
 
-#fightSection {
-    clear: left;
+.fightSection {
+   float: right;
+   clear: right;
+   margin-right: 500px;
 }
 
-#defenderTitle {
-    clear: left;
+.defenderTitle {
+   float: right;
+   clear: right;
+   margin-right: 500px;
 }
 
+
+#opponentArena {
+    float: right;
+    clear: right;
+    margin-right: 500px;
+}
