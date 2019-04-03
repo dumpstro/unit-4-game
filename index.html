@@ -12,32 +12,32 @@
     <div class="title">
         <h1>Star Wars Bounty Hunter Arena!</h1>
     </div>
-    <div>
+    <div class="characterSelection">
         <h2 id="characterSelection">Click to choose your bounty hunter:</h2>
     </div>
-
-    <div class="wrapper">
-        <button class="character" id="boba">
-            <h3>Boba Fett</h3>
-            <img src="assets/images/boba.jpg" alt="Boba">
-            <h4 class="hp" id="hp1">HP: </h4>
-        </button>
-        <button class="character" id="bossk">
-            <h3>Bossk</h3>
-            <img src="assets/images/bossk.jpg" alt="Bossk">
-            <h4 class="hp" id="hp2">HP:  </h4>
-        </button>
-        <button class="character" id="dengar">
-            <h3>Dengar</h3>
-            <img src="assets/images/dengar.jpg" alt="Dengar">
-            <h4 class="hp" id="hp3">HP: </h4>
-        </button>
-        <button class="character" id="ig88">
-            <h3>IG-88</h3>
-            <img src="assets/images/ig88.jpg" alt="ig88">
-            <h4 class="hp" id="hp4">HP: </h4>
-        </button> 
-    </div>
+    <div class="container">
+        <div class="wrapper">
+            <button class="character" id="boba">
+                <h3>Boba Fett</h3>
+                <img src="assets/images/boba.jpg" alt="Boba">
+                <h4 class="hp" id="hp1">HP: </h4>
+            </button>
+            <button class="character" id="bossk">
+                <h3>Bossk</h3>
+                <img src="assets/images/bossk.jpg" alt="Bossk">
+                <h4 class="hp" id="hp2">HP:  </h4>
+            </button>
+            <button class="character" id="dengar">
+                <h3>Dengar</h3>
+                <img src="assets/images/dengar.jpg" alt="Dengar">
+                <h4 class="hp" id="hp3">HP: </h4>
+            </button>
+            <button class="character" id="ig88">
+                <h3>IG-88</h3>
+                <img src="assets/images/ig88.jpg" alt="ig88">
+                <h4 class="hp" id="hp4">HP: </h4>
+            </button>
+        </div> 
     </div>
     <br>
     <div class="characterTitle">           
@@ -66,11 +66,9 @@
     </div>
 
     <div id="battleText">
-
+        <p id="playerText"></p>
+        <p id="opponentText"> </p>
     </div>
-
-
-    
     <script>
         class Character  {
             constructor(hp, atk, ctr, bonus, id) {
@@ -82,20 +80,53 @@
             };
         };
 
-        //var boba = new Character(150, 25, 20, "boba");
-        //var bossk = new Character(180, 10, 20, "bossk");
-        //var dengar = new Character(135, 35, 10,"dengar");
-        //var ig88 = new Character(145, 20, 15, "ig88");
-
         var characters = {
-            "boba": new Character(150, 25, 20, 2, "boba"),
-            "bossk": new Character(180, 10, 20, 3, "bossk"),
-            "dengar": new Character(135, 35, 10, 1, "dengar"),
-            "ig88": new Character(145, 20, 15, 4, "ig88"),
+            "boba": new Character(150, 25, 20, 10, "boba"),
+            "bossk": new Character(180, 10, 20, 20, "bossk"),
+            "dengar": new Character(135, 35, 10, 5, "dengar"),
+            "ig88": new Character(145, 20, 15, 15, "ig88"),
         };
 
         var player = null;
         var opponent = null;
+        var defeats = 0
+
+        function initialize() {
+
+            player = null;
+            opponent = null;
+
+            console.log("here");
+            characters = {
+                "boba": new Character(150, 25, 20, 10, "boba"),
+                "bossk": new Character(180, 10, 20, 20, "bossk"),
+                "dengar": new Character(135, 35, 10, 5, "dengar"),
+                "ig88": new Character(145, 20, 15, 15, "ig88"),
+            };
+
+            //$("<div class=\"wrapper\">").insertAfter(".characterSelection");
+            var characterGroup = document.getElementsByClassName("character");
+
+            $("#characterSelection").show();
+            $(characterGroup).appendTo(".container")
+            $(characterGroup).show();
+    
+            $("#playerText").empty()
+            $("#opponentText").empty()
+
+            $("#hp1").text(characters["boba"].hp);
+            $("#hp2").text(characters["bossk"].hp);
+            $("#hp3").text(characters["dengar"].hp);
+            $("#hp4").text(characters["ig88"].hp);
+
+            $(".character").css({
+                "background-color": "slategray",
+                "color": "black"
+            });
+
+        };
+
+
 
         $(document).ready(function() {
             $("#hp1").append(characters["boba"].hp);
@@ -106,16 +137,24 @@
 
 
         function movePlayer() {
-            $(player).appendTo( $("#arena"));
             var group = document.getElementsByClassName("wrapper");
+            $(player).appendTo("#arena");
+            /**var group = document.getElementsByClassName("character");
+            for (var i=0; i<3; i++) {
+                if(group[i].id !== player.id) {
+                    $(group[i]).appendTo("#enemyArena");
+                }
+            }**/
+
             $(group).appendTo("#enemyArena");
-            $("#characterSelection").remove();
+               
+            $("#characterSelection").hide();
             $(".character").css("background-color", "red");
             $(player).css("background-color", "slategray");
         }
 
         function moveOpponent() {
-            $(opponent).appendTo( $("#opponentArena"));
+            $(opponent).appendTo("#opponentArena");
             $(opponent).css({
                 "background-color": "black",
                 "color": "#ffff00"
@@ -128,19 +167,42 @@
 
             arenaOpponent.hp = arenaOpponent.hp - arenaPlayer.atk;
             arenaPlayer.hp = arenaPlayer.hp - arenaOpponent.ctr;
-            
+
+            $("#playerText").text(arenaPlayer.id +" attacked " + arenaOpponent.id +" for " + arenaPlayer.atk + " damage!");
+            $("#opponentText").text(arenaOpponent.id + " countered for " + arenaOpponent.ctr + " damage!");
+
+            arenaPlayer.atk = arenaPlayer.atk + arenaPlayer.bonus;
+            arenaOpponent.atk = arenaOpponent.atk + arenaOpponent.bonus;
+
             characters[player.id] = arenaPlayer;
             characters[opponent.id] = arenaOpponent;
+   
 
-            for (i = 0; i < 50; i++) {
-                $("#atkBtn").on("click", function() {
-                    $("#hp1").replaceWith(characters["boba"].hp);
-                    $("#hp2").replaceWith(characters["bossk"].hp);
-                    $("#hp3").replaceWith(characters["dengar"].hp);
-                    $("#hp4").replaceWith(characters["ig88"].hp);
-                });
+            if (characters[opponent.id].hp <= 0) {
+                $(opponent).hide();
+                $("#opponentText").text(arenaPlayer.id + " defeated " + arenaOpponent.id + "!");
+                opponent = null;
+                defeats++
             };
+
+            if (defeats === 3) {
+                confirm("You defeated the scum!" + "\n"  + "Click OK to get hit with a thermal detonator again.");
+                initialize();
+            };
+
+
+            if (characters[player.id].hp <= 0) {
+                $("#playerText").text(arenaOpponent.id + " defeated " + arenaPlayer.id + "!");
+                $("#opponentText").text("Game Over!");
+                var gameOver = confirm("Game Over Nerf Herder" + "\n" +"Click OK to get hit with a thermal detonator again.");
+                console.log("Game Over" + gameOver);
+                if (gameOver === true) {
+                    initialize();
+                };
+            };
+
         };
+
 
 
 
@@ -156,9 +218,12 @@
 
         $("#atkBtn").on("click", function() {
             attack();
-            console.log(characters);
-            
+            $("#hp1").text(characters["boba"].hp);
+            $("#hp2").text(characters["bossk"].hp);
+            $("#hp3").text(characters["dengar"].hp);
+            $("#hp4").text(characters["ig88"].hp);
         });
+
 
 
     </script>

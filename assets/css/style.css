@@ -11,6 +11,9 @@ body {
 .wrapper {
     text-align: center;
 }
+.container {
+    float: left;
+}
 
 img {
     height: 200px;
@@ -56,6 +59,13 @@ h2 {
 
 
 #opponentArena {
+    float: right;
+    clear: right;
+    margin-right: 500px;
+}
+
+p {
+    color: #ffff00;
     float: right;
     clear: right;
     margin-right: 500px;
