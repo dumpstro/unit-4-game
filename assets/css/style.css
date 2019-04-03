@@ -70,3 +70,8 @@ p {
     clear: right;
     margin-right: 500px;
 }
+
+#playerText,
+#opponentText {
+    color: slategray;
+}
